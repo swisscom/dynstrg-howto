@@ -357,7 +357,7 @@ The method deleteObject from the aws S3 SDK is used to delete the specified key.
 
 ## Code
 
-You can find all the code used in this tutorial [here](https://gitlab.swisscloud.io/appc-cf-demos/dynstrg-howto/tree/master).
+You can find all the code used in this tutorial [here](https://github.com/swisscom/dynstrg-howto.git).
 
 
 
