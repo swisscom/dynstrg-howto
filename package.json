@@ -1,0 +1,9 @@
+{
+  "name": "dynstrg-album",
+  "version": "0.0.1",
+  "dependencies": {
+    "aws-sdk": "^2.2.9",
+    "connect-multiparty": "^2.0.0",
+    "express": "^4.13.3"
+  }
+}
