@@ -152,7 +152,7 @@ and the output should look something like this:
 ```
 To connect to the dynamic storage service the credentials object contains the informations needed to access it.
 
-### <a name="Accessing-the-dynstrg-service-using-Dragondisk"></a>Accessing the dynstrg service using Dragondisk
+### <a name="#accessing-the-dynstrg-service-using-dragondisk"></a>Accessing the dynstrg service using Dragondisk
 [Dragondisk](http://www.dragondisk.com/) is a browser compatible with S3 storage systems. To install it you have to download the [correct version](http://www.dragondisk.com/download-amazon-s3-client-google-cloud-storage-client.html) for your system.
 Once installed, open it and under File -> Accounts you can create a new Account. On the Provider choose "Other S3 compatible service", in the endpoint use the credentials accessHost, and for the Access Key the credentials accessKey, and for the Secret Key use the credentials sharedSecret. Choose the option connect using SSL/HTTPS. At this point you should be able to connect to the service. You can now create a new bucket that you will use to upload images to the dynamic storage. To do this, simply right click on the S3 service and choose Create Bucket. Since the dynamic storage uses a shared name system for the buckets it is a good choice to use a unique identifier name for the bucket.
 
