@@ -8,7 +8,7 @@ Once the service is created you can deploy the application with the command:
 
     cf push
 
-Then, you can create the bucket with the name you choosed before using [dragondisk](#accessing-the-dynstrg-service-credentials). Once the bucket is created you can start to use the application.
+Then, you can create the bucket with the name you choosed before using [dragondisk](#accessing-the-dynstrg-service-using-dragondisk). Once the bucket is created you can start to use the application.
 
 ## Step by step tutorial
 
