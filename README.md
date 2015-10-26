@@ -1,10 +1,21 @@
 # Dynamic Storage HOW-TO
 This document illustrates how to use the dynamic storage on the Swisscom Application Cloud. It is a step by step tutorial that will help to understand how to connect to the dynamic storage, and how to upload files to the storage. In particular this tutorial will show you how to create a simple node.js application to upload images to the dynamic storage, to visualize them, and to download them, as well as to delete them.
 
-## Dynamic Storage S3 compatibility
+## Quick Start
+
+For a quick start and deployment to Cloud Foundry, you can [download](https://github.com/swisscom/dynstrg-howto/archive/master.zip) this repo as it is. You have to modify the manifest.yml changing the name and the host of the application to avoid collision with a name already used. Also the bucket name should be changed and should be unique. Once you have modified the manifest, you have first to create a dynamic storage service with the name "dynstrg-album". This procedure is explained in detail [here](###Creating-a-dynamic-storage-service-instance-on-your-space).
+Once the service is created you can deploy the application with the command:
+
+    cf push
+
+Then, you can create the bucket with the name you choosed before using [dragondisk](###Accessing-the-dynstrg-service-using-Dragondisk). Once the bucket is created you can start to use the application.
+
+## Step by step tutorial
+
+### Dynamic Storage S3 compatibility
 The dynamic storage is a service S3 compatible. This means that it is possible to use it with applications built to use the aws S3 storage. In particular in this tutorial we will use [the aws S3 SDK for JavaScript in Node.js](https://aws.amazon.com/it/sdk-for-node-js/).
 
-## Installing node.js
+### Installing node.js
 If you have node.js already installed on your computer, you can skip this section and go to the next one.
 First of all download [node.js](https://nodejs.org/en/) and install it accordingly to your [system](https://nodejs.org/en/download/). Depending on your system you have to change the environment variables to include the node.js binary. At the end of the installation to test that everything is properly set up write the following command on the command line:
 
@@ -16,7 +27,7 @@ The output should look as this:
 
 If you get an error this means that the installation is not correct and you have to repeat the installation process.
 
-## Creating an express simple application
+### Creating an express simple application
 For this tutorial we will use [express](http://expressjs.com/) and in particular the version 4. For future releases please refer to the express documentation page since some functions used in this tutorial could be obsolete. [This page](http://expressjs.com/starter/installing.html) offers a good starting point in how to set up our application. We follow the same steps for our tutorial.
 First of all we create a directory for our application. We can call it "dynstrg-album". Depending on your system, create this directory and change the command line to it. Once on the directory level use the command:
 
@@ -29,7 +40,7 @@ To install express use this command:
 
 The command will install express on the directory with all the dependency and it will overwrite the file package.json adding the express dependency.
 
-## Creating the file app.js
+### Creating the file app.js
 Choose your favourite text editor (you can use also your favourite IDE) and start a new file called app.js.
 First of all we can create a local node.js server using express as shown in [this page](http://expressjs.com/starter/hello-world.html). The app starts a server on the host "localhost" and listen on the port 3000, it will respond with the "Hello World" on the route URL(/). For example opening a browser pointing at "http://localhost:3000" will show the message "Hello World!".
 If this is working we can proceed to the deployment to [Cloud Foundry](https://www.cloudfoundry.org/), shown on the next section.
@@ -46,7 +57,7 @@ app.listen(port);
 console.log('Application listening on port '+port);
 ```
 
-## Deploying the app to Cloud Foundry
+### Deploying the app to Cloud Foundry
 In order to deploy the app to Cloud Foundry, a small modification must be made to the file app.js and a new file manifest.yml must be created. First of all
 change the line:
 
@@ -75,7 +86,7 @@ With the command:
 The application is deployed to Cloud Foundry. If everything works fine at the address dystrg-album.domain you should get the message Hello World!
 If instead an error is thrown the deployment step must be checked again.
 
-## Creating a dynamic storage service instance on your space
+### Creating a dynamic storage service instance on your space
 First of all use the command:
 
     cf marketplace
@@ -141,11 +152,11 @@ and the output should look something like this:
 ```
 To connect to the dynamic storage service the credentials object contains the informations needed to access it.
 
-## Accessing the dynstrg service using Dragondisk
+### Accessing the dynstrg service using Dragondisk
 [Dragondisk](http://www.dragondisk.com/) is a browser compatible with S3 storage systems. To install it you have to download the [correct version](http://www.dragondisk.com/download-amazon-s3-client-google-cloud-storage-client.html) for your system.
 Once installed, open it and under File -> Accounts you can create a new Account. On the Provider choose "Other S3 compatible service", in the endpoint use the credentials accessHost, and for the Access Key the credentials accessKey, and for the Secret Key use the credentials sharedSecret. Choose the option connect using SSL/HTTPS. At this point you should be able to connect to the service. You can now create a new bucket that you will use to upload images to the dynamic storage. To do this, simply right click on the S3 service and choose Create Bucket. Since the dynamic storage uses a shared name system for the buckets it is a good choice to use a unique identifier name for the bucket.
 
-## Modifying the manifest file adding the dynstrg service and the bucket name
+### Modifying the manifest file adding the dynstrg service and the bucket name
 Since we will modify the application many times and we will push it to Cloud Foundry many times, it would be time expensive to bind it to the service at every push, so it is best to add to the file manifest.yml the service we want to bind to the app and the environment variables we want the app uses.
 The new manifest.yml file will look like this:
 
@@ -162,7 +173,7 @@ The new manifest.yml file will look like this:
       env:
          bucketName: unique-identifier  
 
-## Accessing the dynstrg service credentials
+### Accessing the dynstrg service credentials
 
 In node.js to access the credentials stored on the environment variable VCAP_SERVICES is simple. You have simply to add these line to the file app.js:
 
@@ -171,7 +182,7 @@ var vcapServices = JSON.parse(process.env.VCAP_SERVICES);
 var credentials = vcapServices['dynstrg'][0].credentials;
 ```
 
-## Aws S3 SDK client for dynamic storage
+### Aws S3 SDK client for dynamic storage
 We will use the aws S3 SDK to interact with the dynamic storage service since this is fully compatible with the S3 service. The first thing to do is to import the module "aws-sdk". This can be done adding the line:
 
 ```javascript
@@ -200,7 +211,7 @@ var s3Client = new AWS.S3({endpoint: endpoint});
 ```
 This is all, the client is configured to use the credentials from the VCAP_SERVICES and it is initialized.
 
-## Uploading files to the dynamic storage
+### Uploading files to the dynamic storage
 In order to be able to upload local files to the dynamic storage, we have to use a node.js module called ["connect-multiparty"](https://www.npmjs.com/package/connect-multiparty). This module allows to post local files using a multipart approach. The built-in module "fs" must also be imported to be able to read the local file containing the image we want to upload. We have to create a HTML form that allows us to choose a file to upload. To do this we can simply use node.js to send dynamically a HTTP page containing a form:
 
 ```javascript
@@ -249,10 +260,10 @@ app.post('/upload', multipartMiddleware, function(req,res){
 ```
 So the file will be uploaded to the dynamic storage using the method "putObject" provided by the aws S3 SDK.
 
-## Checking if the file is correctly uploaded
+### Checking if the file is correctly uploaded
 Using dragondisk we can verify that the image was correctly uploaded to the bucket.
 
-## Visualization of the uploaded images using the method getSignedUrl and deletion of an image using the right click of the mouse over the image
+### Visualization of the uploaded images using the method getSignedUrl and deletion of an image using the right click of the mouse over the image
 S3 allows to create a signed URL to share a specific file with another user. The same can be done with the dynamic storage using the aws S3 SDK. We used this method to visualize all the pictures we stored on dynstrg. First we have to create a function called getSignedUrl:
 
 ```javascript
