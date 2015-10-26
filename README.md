@@ -3,12 +3,12 @@ This document illustrates how to use the dynamic storage on the Swisscom Applica
 
 ## Quick Start
 
-For a quick start and deployment to Cloud Foundry, you can [download](https://github.com/swisscom/dynstrg-howto/archive/master.zip) this repo as it is. You have to modify the manifest.yml changing the name and the host of the application to avoid collision with a name already used. Also the bucket name should be changed and should be unique. Once you have modified the manifest, you have first to create a dynamic storage service with the name "dynstrg-album". This procedure is explained in detail [here](###Creating-a-dynamic-storage-service-instance-on-your-space).
+For a quick start and deployment to Cloud Foundry, you can [download](https://github.com/swisscom/dynstrg-howto/archive/master.zip) this repo as it is. You have to modify the manifest.yml changing the name and the host of the application to avoid collision with a name already used. Also the bucket name should be changed and should be unique. Once you have modified the manifest, you have first to create a dynamic storage service with the name "dynstrg-album". This procedure is explained in detail [here](#creating-a-dynamic-storage-service-instance-on-your-space).
 Once the service is created you can deploy the application with the command:
 
     cf push
 
-Then, you can create the bucket with the name you choosed before using [dragondisk](###Accessing-the-dynstrg-service-using-Dragondisk). Once the bucket is created you can start to use the application.
+Then, you can create the bucket with the name you choosed before using [dragondisk](#accessing-the-dynstrg-service-credentials). Once the bucket is created you can start to use the application.
 
 ## Step by step tutorial
 
@@ -86,7 +86,7 @@ With the command:
 The application is deployed to Cloud Foundry. If everything works fine at the address dystrg-album.domain you should get the message Hello World!
 If instead an error is thrown the deployment step must be checked again.
 
-### Creating a dynamic storage service instance on your space
+### <a name="creating-a-dynamic-storage-service-instance-on-your-space"></a>Creating a dynamic storage service instance on your space
 First of all use the command:
 
     cf marketplace
@@ -152,7 +152,7 @@ and the output should look something like this:
 ```
 To connect to the dynamic storage service the credentials object contains the informations needed to access it.
 
-### <a name="Accessing-the-dynstrg-service-using-Dragondisk"></a> Accessing the dynstrg service using Dragondisk
+### <a name="Accessing-the-dynstrg-service-using-Dragondisk"></a>Accessing the dynstrg service using Dragondisk
 [Dragondisk](http://www.dragondisk.com/) is a browser compatible with S3 storage systems. To install it you have to download the [correct version](http://www.dragondisk.com/download-amazon-s3-client-google-cloud-storage-client.html) for your system.
 Once installed, open it and under File -> Accounts you can create a new Account. On the Provider choose "Other S3 compatible service", in the endpoint use the credentials accessHost, and for the Access Key the credentials accessKey, and for the Secret Key use the credentials sharedSecret. Choose the option connect using SSL/HTTPS. At this point you should be able to connect to the service. You can now create a new bucket that you will use to upload images to the dynamic storage. To do this, simply right click on the S3 service and choose Create Bucket. Since the dynamic storage uses a shared name system for the buckets it is a good choice to use a unique identifier name for the bucket.
 
