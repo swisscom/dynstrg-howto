@@ -190,8 +190,8 @@ var AWS = require('aws-sdk');
 ```
 to the app.js file and at the same time running the command:
 
-    npm install aws-sdk --save
-to install the module in the current directory and saving the dependency on the file package.json. Then the imported module can be configured using the credentials variable we had created previously.
+    npm install aws-sdk@2.3.19 --save
+to install the module in the current directory and saving the dependency on the file package.json. Then the imported module can be configured using the credentials variable we had created previously. In this case we use a specific version of the module (2.3.19) because different versions are currently untested.
 
 ```javascript
 AWS.config.update({
