@@ -190,8 +190,8 @@ var AWS = require('aws-sdk');
 ```
 to the app.js file and at the same time running the command:
 
-    npm install aws-sdk@2.3.19 --save --save-exact
-to install the module in the current directory and saving the dependency on the file package.json. Then the imported module can be configured using the credentials variable we had created previously. In this case we use a specific version of the module (2.3.19) because different versions are currently untested.
+    npm install aws-sdk  --save
+to install the module in the current directory and saving the dependency on the file package.json. Then the imported module can be configured using the credentials variable we had created previously.
 
 ```javascript
 AWS.config.update({
@@ -207,9 +207,9 @@ AWS.config.update({
 The last operation is the creation of the S3 client adding this line:
 
 ```javascript
-var s3Client = new AWS.S3({endpoint: endpoint});
+var s3Client = new AWS.S3({endpoint: endpoint, signatureVersion: 'v2'});
 ```
-This is all, the client is configured to use the credentials from the VCAP_SERVICES and it is initialized.
+This is all, the client is configured to use the credentials from the VCAP_SERVICES and it is initialized. In the last command we used the config "signatureVersion" = "v2" because the Dynamic Storage needs this version in order to accept requests.
 
 ### Uploading files to the dynamic storage
 In order to be able to upload local files to the dynamic storage, we have to use a node.js module called ["connect-multiparty"](https://www.npmjs.com/package/connect-multiparty). This module allows to post local files using a multipart approach. The built-in module "fs" must also be imported to be able to read the local file containing the image we want to upload. We have to create a HTML form that allows us to choose a file to upload. To do this we can simply use node.js to send dynamically a HTTP page containing a form:

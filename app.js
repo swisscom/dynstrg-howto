@@ -31,7 +31,7 @@ AWS.config.update({
 });
 
 var endpoint = new AWS.Endpoint(credentials.accessHost);
-var s3Client = new AWS.S3({endpoint: endpoint});
+var s3Client = new AWS.S3({endpoint: endpoint, signatureVersion: 'v2'});
 function getSignedUrl (bucket, key, timeInSeconds, callback){
   var params = {Bucket: bucket, Key: key,Expires: timeInSeconds};
     s3Client.getSignedUrl('getObject', params, function(err, url){
