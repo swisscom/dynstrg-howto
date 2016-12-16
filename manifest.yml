@@ -1,12 +1,9 @@
----
-path: .
-instances: 1
-memory: 512M
-services:
- - dynstrg-album
 applications:
 - name: dynstrg-album
   host: dynstrg-album
-  command: node app.js
+  memory: 64M
+  services:
+  - dynstrg-album
   env:
-     bucketName: dynstrg-bucket
+    NODE_ENV: production
+    BUCKET_NAME: my-unique-bucket
