@@ -1,26 +1,22 @@
 {
   "name": "dynstrg-howto",
   "version": "1.0.0",
-  "description": "This tutorial illustrates how to use Dynamic Storage on the Swisscom Application Cloud. It is a step by step guide that will help you understand how to connect to the service and how to upload files to it. In particular, this tutorial will show you how to create a simple Node.js application to upload images to Dynamic Storage, to visualize them, to download them, as well as to delete them. This tutorial is assuming that you have the [Cloud Foundry CLI](https://docs.developer.swisscom.com/cf-cli/install-go-cli.html) installed.",
+  "private": true,
+  "description": "This tutorial illustrates how to use Dynamic Storage on the Swisscom Application Cloud.",
+  "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.7.15",
-    "connect-multiparty": "^2.0.0",
-    "express": "^4.14.0"
+    "aws-sdk": "^2.188.0",
+    "connect-multiparty": "^2.1.0",
+    "express": "^4.16.2"
   },
-  "devDependencies": {},
   "scripts": {
-    "start": "node src",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/swisscom/dynstrg-howto.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/swisscom/dynstrg-howto/issues"
-  },
-  "homepage": "https://github.com/swisscom/dynstrg-howto#readme"
+  }
 }
