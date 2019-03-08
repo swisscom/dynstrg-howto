@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000;
 const bucket = process.env.BUCKET_NAME;
 
 const vcapServices = JSON.parse(process.env.VCAP_SERVICES);
-const credentials = vcapServices["dynstrg"][0].credentials;
+const credentials = vcapServices["dynstrg-2"][0].credentials;
 
 AWS.config.update({
   accessKeyId: credentials.accessKey,
