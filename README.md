@@ -9,7 +9,7 @@ If, instead of following the tutorial, you are looking for a quick start and dep
 You'll have to create a dynamic storage service called `dynstrg-album` which can be done with the following command:
 
 ```shell
-$ cf create-service dynstrg usage dynstrg-album
+$ cf create-service dynstrg-2 usage dynstrg-album
 ```
 
 Then, you can create a bucket called `my-bucket` as described [here](#access-s3-storage). Once the bucket is created, you can push the app with.
@@ -150,10 +150,10 @@ You can use the command
 $ cf marketplace
 ```
 
-to list the services available to your organization. You should see the service `dynstrg` with the plan `usage`. To create a new dynstrg service instance use the following command:
+to list the services available to your organization. You should see the service `dynstrg-2` with the plan `usage`. To create a new dynstrg-2 service instance use the following command:
 
 ```shell
-$ cf create-service dynstrg usage dynstrg-album
+$ cf create-service dynstrg-2 usage dynstrg-album
 ```
 
 This creates a new service instance called "dynstrg-album". At this point, the service can be bind to the application with the command:
@@ -240,7 +240,7 @@ In Node.js, to access the credentials stored on the environment variable `VCAP_S
 
 ```javascript
 const vcapServices = JSON.parse(process.env.VCAP_SERVICES);
-const credentials = vcapServices["dynstrg"][0].credentials;
+const credentials = vcapServices["dynstrg-2"][0].credentials;
 ```
 
 ### Add AWS S3 SDK
